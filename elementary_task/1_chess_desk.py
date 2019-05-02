@@ -1,7 +1,7 @@
 from elementary_task.helper.controller import Controller
 
 
-class ChessDesk(Controller):
+class ChessDesk:
     def __init__(self, height, width):
         self.height = height
         self.width = width
@@ -25,4 +25,4 @@ class ChessDesk(Controller):
 
 
 if __name__ == '__main__':
-    ChessDesk(50, 4)
+    ChessDesk('',  4)
