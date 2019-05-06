@@ -9,7 +9,7 @@ class Student:
 	self.age = self.get_age()
 	self.time = self.get_time()	
 
-    def get_name(self):
+    def get_name_and_initials(self):
 	full_name = self.raw_data[0].split(' ')
 	return '{0} {1}.{2}'.format(full_name[0], full_name[1][0],
                                     full_name[2][0])
@@ -23,7 +23,7 @@ class Student:
 
 	return age
 
-    def get_time(self):
+    def get_duration_time(self):
 	time = self.raw_data[2].split('-')
 	time = [i.split(':') for i in time]
 	start_time = int(time[0][0]) * 60 + int(time[0][1])

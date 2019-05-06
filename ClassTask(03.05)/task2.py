@@ -1,50 +1,65 @@
-def to_string(text):
-   philosophy = ''
-   for line in text:
-	philosophy += line.strip() + ' '
+import this 
 
-   return philosophy
+class Reader:
+    def __init__(self):
 
-def counter(word, text):
-    print('{0}: {1}'.format(word, text.count(word)))
+	s = this.s.decode('rot13')
+	self.text = ' '.join(s.splitlines())
 
-def mult(number):
-    number = str(number)
-    result = 1
-    for i in number:
-	result *= int(i)
+    def counter(self, word):
+	return self.text.count(word)
 
-    print(result)
+    def to_upper(self):
+        return self.text.upper()
+
+    def replacer(self, from_symbol, to_symbol):
+        return self.text.replace(from_symbol, to_symbol)
+
+class Num:
+    def __init__(self, number):
+	self.number = number
+    
+    def mult(self):
+	number = str(self.number)
+	result = 1
+	for i in number:
+	    result *= int(i)
+	return result
+
+    def reversed(self):
+	return str(self.number)[::-1]
+
+    def sorted(self):
+	sorted_number = [int(i) for i in str(self.number)]
+	sorted_number.sort()
+	return sorted_number
 
 if __name__ == '__main__':
-    text = open('zen.txt', 'r')
-    philosophy = to_string(text)
 
+    reader = Reader()
     # 1.1
-    counter('better', philosophy)
-    counter('never', philosophy)
-    counter('is', philosophy)
-  
+    print('better: {0}'.format(reader.counter('better')))
+    print('never: {0}'.format(reader.counter('never')))
+    print('is: {0}'.format(reader.counter('is')))
+
     # 1.2 
-    print(philosophy.upper())
+    print(reader.to_upper())
 
-    # 1.3
-    print(philosophy.replace('i', '&'))
-    
+    # 1.3 
+    print(reader.replacer('i', '$'))
 
-    number = 1234
-    # 2.1
-    mult(number)  # 24
+#######################################################################
+    num = Num(5234)
+  
+    # 2.1 
+    print(num.mult())
 
-    # 2.2
-    print(str(number)[::-1])
+    # 2.2 
+    print(num.reversed())
 
-    # 2.3
-    sorted_number = [int(i) for i in str(number)]
-    sorted_number.sort()
-    print(sorted_number)
-
-    # 3
-    a, b = 1, 2
+    # 2.3 
+    print(num.sorted())
+#######################################################################
+    a,b = 1,2
     a, b = b, a
-    print(a, b) 
+    print(a, b)
