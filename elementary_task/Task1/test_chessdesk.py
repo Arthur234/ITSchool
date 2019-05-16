@@ -1,4 +1,6 @@
 import unittest
+
+
 from elementary_task.Task1.chessdesk import ChessDesk
 
 
@@ -18,16 +20,22 @@ class TestChessDesk(unittest.TestCase):
 
     def test_verification_by_data(self):
         self.assertTrue(self.desk1.verification_by_data)
-        self.assertRaises(ValueError, self.test_verification_by_data)
-        self.assertRaises(ValueError, self.test_verification_by_data)
+        # self.assertRaises(ValueError, self.desk2.verification_by_data())
+        # self.assertRaises(ValueError, self.desk3.verification_by_data)
+        # with self.assertRaises(ValueError):
+            # self.desk2.verification_by_data()
 
     def test_create_desk(self):
-        # self.assertIsNone(self.desk1.create_desk)
-        # self.assertIsNone(self.desk2.create_desk)
-        # self.assertIsNone(self.desk3.create_desk)
+        self.assertIsNotNone(self.desk1.create_desk)
+        self.assertIsNotNone(self.desk2.create_desk)
+        self.assertIsNotNone(self.desk3.create_desk)
 
-        # self.assertIsInstance(self.desk1.create_desk, str)
-        # self.assertIsInstance(self.desk2.create_desk, str)
-        # self.assertIsInstance(self.desk3.create_desk, str)
+        self.assertIsInstance(self.desk1.create_desk(), str)
+        self.assertIsInstance(self.desk2.create_desk(), str)
+        self.assertIsInstance(self.desk3.create_desk(), str)
 
         self.assertEqual('* \n *\n', self.desk4.desk)
+
+
+if __name__ == '__main__':
+    unittest.main()
