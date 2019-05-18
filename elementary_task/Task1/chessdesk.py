@@ -1,42 +1,50 @@
-
 class ChessDesk:
+    """
+    TODO:
+    1. Check ArgumentParse library
+    2. Create flags which user can choose to fill desk
+    """
+
     def __init__(self, height, width):
         self.height = height
         self.width = width
 
-        if str(height) in '' and str(width) in '':
-            ChessDesk.get_instructions()
-        elif self.verification_by_type() and self.verification_by_data():
-            self.desk = self.create_desk()
-            print(self.desk)
+    def _verification_by_data(self):
+        if self.height <= 1 or self.width <= 1:
+            raise Exception('Data out of range: {} and {}'.format(self.height, self.width))
 
-    def verification_by_type(self):
-        if type(self.width) == int and type(self.height) == int:
-            return True
-        else:
-            raise TypeError('Invalid type: {} and {}'.format(type(self.height), type(self.width)))
-
-    def verification_by_data(self):
-        if 1 < self.height < 121 or 1 < self.width < 121:
-            return True
-        else:
-            raise ValueError('Data out of range: {} and {}'.format(self.height, self.width))
+    def _convert_to_int(self):
+        try:
+            self.height = int(self.height)
+            self.width = int(self.width)
+        except ValueError:
+            raise ValueError('Invalid type: {} and {}'.format(type(self.height), type(self.width)))
 
     def create_desk(self):
+        self._convert_to_int()
+        self._verification_by_data()
+
         symbols = ('*', ' ')
         desk = ''
 
         for h in range(self.height):
             for w in range(self.width):
                 desk += symbols[(h + w) % 2]
-
             desk += '\n'
         return desk
 
-    @staticmethod
-    def get_instructions():
-        return 'write instructions'
-
 
 if __name__ == '__main__':
-    ChessDesk(2, 2)
+    print('To get help run script with -h')
+    while True:
+
+        height = input('Enter height: ')
+        width = input('Enter width: ')
+
+        desk = ChessDesk(height, width)
+        print(desk.create_desk())
+
+        is_break = True if input('Continue? [y/n]: ') == 'n' else False
+        if is_break:
+            print('Good luck! \')')
+            break
