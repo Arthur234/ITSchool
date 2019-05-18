@@ -1,46 +1,38 @@
 class Triangle:
     def __init__(self, raw_data):
-
-        if raw_data in '':
-            Triangle.get_instructions()
-        else:
-            self.raw_data = raw_data.replace(' ', '').split(',')
-            self.name = self.raw_data[0]
-
-            try:
-                self.a = float(self.raw_data[1])
-                self.b = float(self.raw_data[2])
-                self.c = float(self.raw_data[3])
-                self.square = self.calculate_square()
-            except ValueError as err:
-                print(err)
-                print('Please check your data, you enter wrong parameters')
+        self.raw_data = raw_data.replace(' ', '').split(',')
+        self.name = self.raw_data[0]
 
     def __str__(self):
-        return '[Triangle {0}]: {1} cm'.format(self.name, self.square)
+        return '[Triangle {0}]: {1} cm'.format(self.name, self.calculate_square())
+
+    def _get_triangle_sides(self):
+        try:
+            self.a = float(self.raw_data[1])
+            self.b = float(self.raw_data[2])
+            self.c = float(self.raw_data[3])
+        except ValueError:
+            raise ValueError('Invalid type: {} ,{} and {}'.format(
+                type(self.a), type(self.b), type(self.c))
+            )
 
     def calculate_square(self):
+        self._get_triangle_sides()
         p = (self.a + self.b + self.c) / 2
         square = (p * (p - self.a) * (p - self.b) * (p - self.c)) ** 0.5
         return square
 
-    @classmethod
-    def get_instructions(cls):
-        pass
-
 
 if __name__ == '__main__':
-
     triangles = []
     while True:
-        raw_data = input('Enter: <name>, <side A>, <side B>, <side C> ')
+        raw_data = input('Enter: <name>, <side A>, <side B>, <side C>: ')
         triangles.append(Triangle(raw_data))
-        y = input('Add more? (y/n)')
 
-        if y == 'n':
+        is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
+        if is_break:
+            triangles.sort(key=lambda c: c.calculate_square(), reverse=True)
+            print(f'{"Triangles":=^40}')
+            for i in triangles:
+                print(i)
             break
-
-    triangles.sort(key=lambda c: c.square, reverse=True)
-
-    for i in triangles:
-        print(i)
