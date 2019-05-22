@@ -1,9 +1,4 @@
 class ChessDesk:
-    """
-    TODO:
-    1. Check ArgumentParse library
-    2. Create flags which user can choose to fill desk
-    """
 
     def __init__(self, height, width):
         self.height = height
@@ -35,7 +30,7 @@ class ChessDesk:
 
 
 if __name__ == '__main__':
-    print('To get help run script with -h')
+
     while True:
 
         height = input('Enter height: ')

@@ -17,13 +17,14 @@ class FibonacciNumbers:
         f1, f2 = 0, 1
         result = []
         if self.start == 0:
-            result.append(0, 1)
+            result.append(str(0))
+            result.append(str(1))
 
         while True:
             f1, f2 = f2, f1 + f2
 
             if f2 > self.start:
-                result.append(f2)
+                result.append(str(f2))
 
             if f2 > self.end:
                 break
@@ -38,7 +39,7 @@ if __name__ == '__main__':
         end = input('End of the interval: ')
 
         fibonacci = FibonacciNumbers(start, end)
-        print(*fibonacci.count_fibonacci())
+        print(', '.join(fibonacci.count_fibonacci()))
 
         is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
         if is_break:

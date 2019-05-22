@@ -6,7 +6,7 @@ class Triangle:
     def __str__(self):
         return '[Triangle {0}]: {1} cm'.format(self.name, self.calculate_square())
 
-    def _get_triangle_sides(self):
+    def _set_triangle_sides(self):
         try:
             self.a = float(self.raw_data[1])
             self.b = float(self.raw_data[2])
@@ -17,7 +17,7 @@ class Triangle:
             )
 
     def calculate_square(self):
-        self._get_triangle_sides()
+        self._set_triangle_sides()
         p = (self.a + self.b + self.c) / 2
         square = (p * (p - self.a) * (p - self.b) * (p - self.c)) ** 0.5
         return square

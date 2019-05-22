@@ -27,10 +27,10 @@ class CompareEnvelopes:
 
 if __name__ == '__main__':
     while True:
-        a1 = input('Enter first side of the first envelope: ')
-        b1 = input('Enter second side of the first envelope: ')
-        a2 = input('Enter first side of the second envelope:: ')
-        b2 = input('Enter second side of the second envelope:: ')
+        a1 = input('Enter first side of the outer envelope: ')
+        b1 = input('Enter second side of the outer envelope: ')
+        a2 = input('Enter first side of the inner envelope:: ')
+        b2 = input('Enter second side of the inner envelope:: ')
 
         envelopes = CompareEnvelopes(a1, b1, a2, b2)
         print(envelopes.parallel_comparison())

@@ -4,20 +4,20 @@ from elementary_task.Task1.chessdesk import ChessDesk
 
 
 class TestChessDesk(unittest.TestCase):
-    """
-    TODO:
-    1. Name of tests functions format: <test_method_name_functionality>
-    2. Write ONE function for ONE assert
-    """
 
     def setUp(self) -> None:
-        self.desk1 = ChessDesk(15, 49)
+        self.desk1 = ChessDesk(3, 2)
+        self.desk2 = ChessDesk('k', 2)
 
     def test_create_desk_good_sample(self):
-        pass
+        expected = '* \n *\n* \n'
+        now = self.desk1.create_desk()
+        self.assertEqual(expected, now)
 
     def test_create_desk_bad_sample(self):
-        pass
+        expected = '* \n *\n* * \n'
+        now = self.desk1.create_desk()
+        self.assertNotEqual(expected, now)
 
 
 if __name__ == '__main__':

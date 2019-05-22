@@ -6,16 +6,16 @@ class Integers:
         try:
             self.number = int(self.number)
         except ValueError:
-            raise ValueError('Invalid type: {}'.format(
-                type(self.number)
-            ))
+            raise ValueError(
+                'Invalid type: {}'.format(type(self.number))
+            )
 
     def count_integers(self):
         self._convert_to_int()
         numbers = []
         max_square = int(self.number ** 0.5)
-        for i in range(max_square):
-            numbers.append(i)
+        for i in range(1, max_square + 1):
+            numbers.append(str(i))
 
         return numbers
 
@@ -25,7 +25,7 @@ if __name__ == '__main__':
         number = input('Enter number: ')
 
         integers = Integers(number)
-        print(integers.count_integers())
+        print(', '.join(integers.count_integers()))
 
         is_break = True if input('Continue? [y/n]: ') == 'n' else False
         if is_break:
