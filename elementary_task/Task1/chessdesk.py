@@ -6,7 +6,7 @@ class ChessDesk:
 
     def _verification_by_data(self):
         if self.height <= 1 or self.width <= 1:
-            raise Exception('Data out of range: {} and {}'.format(self.height, self.width))
+            raise ValueError('Data out of range: {} and {}'.format(self.height, self.width))
 
     def _convert_to_int(self):
         try:
@@ -37,9 +37,12 @@ if __name__ == '__main__':
         width = input('Enter width: ')
 
         desk = ChessDesk(height, width)
-        print(desk.create_desk())
+        try:
+            print(desk.create_desk())
+        except ValueError:
+            print('Wrong data. Enter again')
 
-        is_break = True if input('Continue? [y/n]: ') == 'n' else False
+        is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
         if is_break:
             print('Good luck! \')')
             break
