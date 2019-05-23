@@ -25,7 +25,10 @@ if __name__ == '__main__':
         number = input('Enter number: ')
 
         integers = Integers(number)
-        print(', '.join(integers.count_integers()))
+        try:
+            print(', '.join(integers.count_integers()))
+        except ValueError:
+            print('Wrong data. Enter again')
 
         is_break = True if input('Continue? [y/n]: ') == 'n' else False
         if is_break:
