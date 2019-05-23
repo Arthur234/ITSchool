@@ -12,9 +12,7 @@ class Triangle:
             self.b = float(self.raw_data[2])
             self.c = float(self.raw_data[3])
         except ValueError:
-            raise ValueError('Invalid type: {} ,{} and {}'.format(
-                type(self.a), type(self.b), type(self.c))
-            )
+            raise ValueError('Invalid type')
 
     def calculate_square(self):
         self._set_triangle_sides()
@@ -27,7 +25,11 @@ if __name__ == '__main__':
     triangles = []
     while True:
         raw_data = input('Enter: <name>, <side A>, <side B>, <side C>: ')
-        triangles.append(Triangle(raw_data))
+        try:
+            Triangle(raw_data).calculate_square()
+            triangles.append(Triangle(raw_data))
+        except ValueError:
+            print('Wrong data')
 
         is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
         if is_break:
