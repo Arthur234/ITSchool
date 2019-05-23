@@ -53,9 +53,6 @@ DATA = dict(
 class Num2Words:
     def __init__(self, number):
         self.number = number
-        self.result = self.transform()
-
-        print(' '.join(self.result))
 
     def transform(self):
         self._convert_number_to_reversed_list()
@@ -66,7 +63,8 @@ class Num2Words:
         for num in zip(self.number, pattern):
             result.append(DATA[num[1]][num[0]])
 
-        return list(filter(lambda x: x != '', result))[::-1]
+        result = list(filter(lambda x: x != '', result))[::-1]
+        return ' '.join(result)
 
     def _create_valid_pattern(self):
         pattern = ['units', 'tens', 'hundreds', 'units_for_thousands', 'tens']
@@ -86,7 +84,21 @@ class Num2Words:
 
 
 if __name__ == '__main__':
-    try:
-        Num2Words('1245d')
-    except ValueError:
-        print('a')
+    while True:
+        number = input('Enter number: ')
+        if number in '':
+            print(
+                '''
+                    Program converts numbers into capital letters.
+                    Enter number to use.
+                '''
+            )
+        else:
+            try:
+                print(Num2Words(number).transform())
+            except ValueError:
+                print('Wrong data. Enter again')
+            is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
+            if is_break:
+                print('Good luck! \')')
+                break
