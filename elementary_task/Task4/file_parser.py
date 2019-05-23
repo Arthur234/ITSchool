@@ -16,7 +16,7 @@ class FileParser:
     def find_string(self):
         self._is_file_exists()
 
-        file = open(self.path, encoding="utf-8")
+        file = open(self.path, encoding="utf8")
         count = 0
         for line in file:
             count += line.count(self.input_str)
