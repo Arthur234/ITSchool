@@ -39,8 +39,10 @@ if __name__ == '__main__':
         end = input('End of the interval: ')
 
         fibonacci = FibonacciNumbers(start, end)
-        print(', '.join(fibonacci.count_fibonacci()))
-
+        try:
+            print(', '.join(fibonacci.count_fibonacci()))
+        except ValueError:
+            print('Wrong data. Enter again')
         is_break = True if input('\nContinue? [y/n]: ') == 'n' else False
         if is_break:
             print('Good luck! \')')
