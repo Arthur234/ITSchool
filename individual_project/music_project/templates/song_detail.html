@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <blockquote class="blockquote text-center">
+        <p class="mb-0">{{current.name}}</p>
+        <footer class="blockquote-footer">{{current.artist}}</footer>
+        <p>{{current.lyrics}}</p>
+    </blockquote>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for p in playlists %}
+        <p>{{p.name}}</p>
+    {% endfor %}
+    <a href="{% url 'create_new_playlist'%}">Создать новый плэйлитс</a>
+{% endblock content %}

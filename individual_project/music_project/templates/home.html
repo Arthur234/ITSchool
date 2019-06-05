@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<h1>Все песни</h1>
+{% for song in songs %}
+<div>
+    <ul class="list-group-unstyled">
+        <li class="list-group-item list-group-item-action list-group-item-dark">
+            <h3><a class="text-muted" href='{% url "songs" song.pk %}'>{{song.artist}} - {{song.name}}</a></h3>
+            <p>{{song.album}}</p>
+            <p>{{song.genre}}</p>
+<!--            <form action="add" method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <button type="submit" class="btn btn-secondary" value="song.pk">Добавить в плэйлист</button>-->
+<!--            </form>-->
+        </li>
+    </ul>
+</div>
+{% endfor %}
+
+{% endblock content%}
