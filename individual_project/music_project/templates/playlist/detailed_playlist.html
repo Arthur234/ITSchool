@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>{{playlist.name}}</p>
+<hr>
+    {% for song in songs %}
+        <p><a href='{% url "song_detail" song.song.pk %}'>{{song.song.name}}</a></p>
+    {% endfor%}
+{% endblock content %}

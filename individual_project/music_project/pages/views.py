@@ -20,10 +20,16 @@ def get_playlist(request, user_id):
     current_user = request.user
     playlists = Playlist.objects.filter(user=user_id)
 
-    songs = UserSongs.objects.filter(playlist__name='train')
 
     return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists,
-                                                            'user': user_id})
+                                                            'user_id': user_id})
+
+
+def get_detailed_playlist(request, user_id, playlist_id):
+    print(playlist_id)
+    playlist = Playlist.objects.get(pk=playlist_id)
+    songs = UserSongs.objects.filter(playlist__name=playlist.name)
+    return render(request, 'playlist/detailed_playlist.html', {'playlist':playlist, 'songs':songs})
 
 
 def create_playlist(request):
@@ -52,8 +58,3 @@ def add_song(request, song_id):
     else:
         form = ChoosePlaylistForm(request.user)
         return render(request, 'playlist/add.html', {'form': form})
-
-
-def get_detailed_playlist(request, user_id, playlist_id):
-
-    return render(request, 'playlist/detailed_playlist.html')

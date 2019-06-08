@@ -3,13 +3,14 @@
 {% block content %}
 
     {% for p in playlists %}
-        <a href="{% url 'playlist_detail' p.pk user %}">p.name</a>
+        <p><a href="{% url 'detailed_playlist' user_id p.pk  %}">{{p.name}}</a></p>
+        <hr>
     {% endfor %}
 
 <!--    {% for i in song %}-->
 <!--        <p>{{i.song.name}}</p>-->
 <!--    {% endfor %}-->
 
-    <a href="{% url 'create_playlist'%}">Создать новый плэйлитс</a>
+    <a href="{% url 'create_playlist'%}"><b>Create New Playlist</b></a>
 
 {% endblock content %}
