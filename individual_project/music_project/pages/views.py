@@ -12,13 +12,13 @@ def index(request):
 
 def by_song(request, song_id):
     current_song = Song.objects.get(pk=song_id)
-    return render(request, 'song_detail.html', {'current': current_song})
+    return render(request, 'song/song_detail.html', {'current': current_song})
 
 
 def playlist(request, user_id):
     current_user = request.user
     playlists = Playlist.objects.filter(user=user_id)
-    return render(request, 'playlists.html', {'current_user': current_user, 'playlists': playlists})
+    return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists})
 
 
 # def add_to_playlist(request, *args):
@@ -27,11 +27,11 @@ def playlist(request, user_id):
 
 
 # def create_new_playlist(requsest):
-#     return render(requsest, 'create_new_playlist.html')
+#     return render(requsest, 'create_playlist.html')
 
 
 # class PlaylistCreateForm(CreateView):
-#     template_name = 'create_new_playlist.html'
+#     template_name = 'create_playlist.html'
 #     form_class = PlaylistForm
 #     success_url = reverse_lazy('home')
 #
@@ -57,7 +57,7 @@ def playlist_create_form(request):
     else:
         form = PlaylistForm()
 
-    return render(request, 'create_new_playlist.html', {'form': form})
+    return render(request, 'playlist/create_playlist.html', {'form': form})
 
 
 def add_in_playlist(request, song_id):
