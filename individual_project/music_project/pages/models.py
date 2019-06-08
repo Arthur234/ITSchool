@@ -35,6 +35,9 @@ class Playlist(models.Model):
         verbose_name_plural = 'Плэйлисты'
         verbose_name = 'Плэйлист'
 
+    def __str__(self):
+        return f'{self.user.username} - {self.name}'
+
 
 class UserSongs(models.Model):
 
@@ -54,4 +57,6 @@ class UserSongs(models.Model):
         verbose_name = 'Песня пользователя'
         unique_together = ('playlist', 'song')
 
+    def __str__(self):
+        return f'{self.playlist} _ {self.song}'
 

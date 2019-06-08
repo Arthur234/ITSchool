@@ -10,6 +10,7 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
+
 class DetailUserView(ListView):
     model = CustomUser
     template_name = 'user_detail.html'

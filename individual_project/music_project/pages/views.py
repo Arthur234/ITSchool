@@ -1,13 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
 
-from .models import Song, UserSongs, Playlist
+from .models import Song, Playlist, UserSongs
 from .forms import PlaylistForm, ChoosePlaylistForm
-
-
-# from individual_project.music_project.users.models import CustomUser
 
 
 def index(request):
@@ -26,10 +21,9 @@ def playlist(request, user_id):
     return render(request, 'playlists.html', {'current_user': current_user, 'playlists': playlists})
 
 
-def add_to_playlist(request, *args):
-    # print(request.user.pk)
-    print(args)
-    return HttpResponseRedirect("../")
+# def add_to_playlist(request, *args):
+#     print(args)
+#     return HttpResponseRedirect("../")
 
 
 # def create_new_playlist(requsest):
@@ -48,6 +42,7 @@ def add_to_playlist(request, *args):
 #         name = form
 
 def playlist_create_form(request):
+
     if request.method == 'POST':
         form = PlaylistForm(request.POST)
 
@@ -65,14 +60,16 @@ def playlist_create_form(request):
     return render(request, 'create_new_playlist.html', {'form': form})
 
 
-def add_song_in_playlist(request):
+def add_in_playlist(request, song_id):
     form = ChoosePlaylistForm()
 
     if request.method == 'POST':
         form = ChoosePlaylistForm(request.POST)
 
         if form.is_valid():
-            return HttpResponseRedirect('/')
+            user_song = UserSongs(playlist=playlist, user=request.user, song=song_id)
 
-    return render(request, 'create_new_playlist.html', {'form': form})
+            return HttpResponseRedirect('../')
+
+    return render(request, 'add_song_in_playlist.html', {'form': form})
 
