@@ -5,7 +5,7 @@
         <p class="mb-0">{{current.name}}</p>
         <footer class="blockquote-footer">{{current.artist}}</footer>
         <p>{{current.lyrics}}</p>
-        <a href='{% url "add_song_in_playlist" current.pk%}'>Add to playlist</a>
+        <a href='{% url "add_song_in_playlist" current.pk %}'>Add to playlist</a>
     </blockquote>
     {{form}}
 {% endblock content %}

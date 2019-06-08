@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Song, Playlist, UserSongs
 
 
+@admin.register(Song)
 class SongAdmin(admin.ModelAdmin):
     list_display = ('name', 'artist', 'album', 'genre',)
     list_display_links = ('name', 'artist',)
@@ -10,6 +11,3 @@ class SongAdmin(admin.ModelAdmin):
 
 
 admin.site.register([Playlist, UserSongs])
-
-admin.site.register(Song, SongAdmin)
-

@@ -16,7 +16,7 @@ class Song(models.Model):
         verbose_name = 'Песня'
 
     def __str__(self):
-        return f'{self.pk}: {self.artist} - {self.name}'
+        return f'{self.name}'
 
 
 class Musicians(models.Model):
@@ -36,7 +36,7 @@ class Playlist(models.Model):
         verbose_name = 'Плэйлист'
 
     def __str__(self):
-        return f'{self.user.username} - {self.name}'
+        return f'{self.name}'
 
 
 class UserSongs(models.Model):

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -10,39 +11,22 @@ def index(request):
     return render(request, 'home.html', {'songs': songs})
 
 
-def by_song(request, song_id):
+def get_song_detail(request, song_id):
     current_song = Song.objects.get(pk=song_id)
     return render(request, 'song/song_detail.html', {'current': current_song})
 
 
-def playlist(request, user_id):
+def get_playlist(request, user_id):
     current_user = request.user
     playlists = Playlist.objects.filter(user=user_id)
-    return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists})
+
+    songs = UserSongs.objects.filter(playlist__name='train')
+
+    return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists,
+                                                            'user': user_id})
 
 
-# def add_to_playlist(request, *args):
-#     print(args)
-#     return HttpResponseRedirect("../")
-
-
-# def create_new_playlist(requsest):
-#     return render(requsest, 'create_playlist.html')
-
-
-# class PlaylistCreateForm(CreateView):
-#     template_name = 'create_playlist.html'
-#     form_class = PlaylistForm
-#     success_url = reverse_lazy('home')
-#
-#     def save(self, **kwargs):
-#         # context = super().get_context_data(**kwargs)
-#         # context['playlist'] = Playlist.objects.all()
-#         # return context
-#         name = form
-
-def playlist_create_form(request):
-
+def create_playlist(request):
     if request.method == 'POST':
         form = PlaylistForm(request.POST)
 
@@ -50,26 +34,26 @@ def playlist_create_form(request):
             name = form.cleaned_data['name']
             playlist = Playlist(name=name, user=request.user)
             playlist.save()
-            pass
-
             return HttpResponseRedirect('/')
-
     else:
         form = PlaylistForm()
+    return render(request, 'playlist/add.html', {'form': form})
 
-    return render(request, 'playlist/create_playlist.html', {'form': form})
 
-
-def add_in_playlist(request, song_id):
-    form = ChoosePlaylistForm()
-
+def add_song(request, song_id):
     if request.method == 'POST':
-        form = ChoosePlaylistForm(request.POST)
-
+        form = ChoosePlaylistForm(request.user, request.POST)
         if form.is_valid():
-            user_song = UserSongs(playlist=playlist, user=request.user, song=song_id)
 
-            return HttpResponseRedirect('../')
+            playlist = form.cleaned_data['playlist']
+            user_song = UserSongs(playlist=playlist, song=Song.objects.get(id=int(song_id)))
+            user_song.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ChoosePlaylistForm(request.user)
+        return render(request, 'playlist/add.html', {'form': form})
 
-    return render(request, 'add_song_in_playlist.html', {'form': form})
 
+def get_detailed_playlist(request, user_id, playlist_id):
+
+    return render(request, 'playlist/detailed_playlist.html')
