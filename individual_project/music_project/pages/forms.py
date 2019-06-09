@@ -11,7 +11,6 @@ class PlaylistForm(ModelForm):
 
 
 class ChoosePlaylistForm(Form):
-
     playlist = ModelChoiceField(queryset=Playlist.objects.all())
 
     def __init__(self, user, *args, **kwargs):

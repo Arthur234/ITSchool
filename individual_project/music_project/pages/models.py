@@ -27,7 +27,7 @@ class Playlist(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название плэйлиста')
     user = models.ForeignKey(
         get_user_model(), null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name='Пользователь'
     )
 
@@ -43,12 +43,12 @@ class UserSongs(models.Model):
 
     playlist = models.ForeignKey(
         'Playlist', null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name='Плэйлист'
     )
     song = models.ForeignKey(
         'Song', null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         verbose_name='Песня'
     )
 

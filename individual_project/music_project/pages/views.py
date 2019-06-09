@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -20,16 +21,26 @@ def get_playlist(request, user_id):
     current_user = request.user
     playlists = Playlist.objects.filter(user=user_id)
 
-
     return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists,
                                                             'user_id': user_id})
 
 
 def get_detailed_playlist(request, user_id, playlist_id):
-    print(playlist_id)
     playlist = Playlist.objects.get(pk=playlist_id)
     songs = UserSongs.objects.filter(playlist__name=playlist.name)
-    return render(request, 'playlist/detailed_playlist.html', {'playlist':playlist, 'songs':songs})
+    return render(request, 'playlist/detailed_playlist.html', {'playlist': playlist, 'songs': songs,
+                                                               'user_id': user_id})
+
+
+def delete_song_from_playlist(requsest, user_id, playlist_id, song_id):
+    playlist = Playlist.objects.get(pk=playlist_id)
+    songs = UserSongs.objects.filter(playlist__name=playlist.name)
+
+    UserSongs.objects.filter(playlist__name=playlist.name).filter(song__pk=song_id).delete()
+
+    return render(requsest, 'playlist/detailed_playlist.html', {
+        'user_id': user_id, 'playlist': playlist, 'songs': songs
+    })
 
 
 def create_playlist(request):
@@ -50,7 +61,6 @@ def add_song(request, song_id):
     if request.method == 'POST':
         form = ChoosePlaylistForm(request.user, request.POST)
         if form.is_valid():
-
             playlist = form.cleaned_data['playlist']
             user_song = UserSongs(playlist=playlist, song=Song.objects.get(id=int(song_id)))
             user_song.save()
@@ -58,3 +68,28 @@ def add_song(request, song_id):
     else:
         form = ChoosePlaylistForm(request.user)
         return render(request, 'playlist/add.html', {'form': form})
+
+
+def delete_playlist(request, user_id, playlist_id):
+    Playlist.objects.get(pk=playlist_id).delete()
+    playlists = Playlist.objects.filter(user=user_id)
+
+    return render(request, 'playlist/playlists_view.html', {'current_user': request.user, 'playlists': playlists,
+                                                            'user_id': user_id})
+
+
+def search_song(request):
+    query = request.GET.get("q")
+    if query not in '':
+        by_name = Song.objects.filter(Q(name__icontains=query))
+        by_album = Song.objects.filter(Q(album__icontains=query))
+        by_artist = Song.objects.filter(Q(artist__icontains=query))
+        songs = Song.objects.none()
+    else:
+        songs = Song.objects.all()
+        by_name = Song.objects.none()
+        by_album = Song.objects.none()
+        by_artist = Song.objects.none()
+
+    return render(request, 'home.html', {'songs': songs, 'by_name': by_name, 'by_album': by_album,
+                                         'by_artist': by_artist})
