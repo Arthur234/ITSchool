@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -41,6 +40,19 @@ def delete_song_from_playlist(requsest, user_id, playlist_id, song_id):
     return render(requsest, 'playlist/detailed_playlist.html', {
         'user_id': user_id, 'playlist': playlist, 'songs': songs
     })
+
+
+def update_playlist_name(request, user_id, playlist_id):
+    if request.method == 'POST':
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            Playlist.objects.filter(pk=playlist_id).update(name=name)
+
+            return HttpResponseRedirect('../')
+    else:
+        form = PlaylistForm()
+    return render(request, 'playlist/add.html', {'form': form})
 
 
 def create_playlist(request):

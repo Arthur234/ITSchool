@@ -10,6 +10,7 @@ from .views import (
     search_song,
     delete_playlist,
     delete_song_from_playlist,
+    update_playlist_name,
 )
 
 urlpatterns = [
@@ -23,6 +24,7 @@ urlpatterns = [
     path('playlists/<int:user_id>/', get_playlist, name='playlist'),
     path('playlists/<int:user_id>/detail/<int:playlist_id>/', get_detailed_playlist, name='detailed_playlist'),
     path('playlists/<int:user_id>/detail/<int:playlist_id>/delete/', delete_playlist, name='delete_playlist'),
+    path('playlists/<int:user_id>/detail/<int:playlist_id>/rename/', update_playlist_name, name='update_name'),
     path('playlists/<int:user_id>/detail/<int:playlist_id>/<int:song_id>', delete_song_from_playlist,
          name='delete_song'),
 

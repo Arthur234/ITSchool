@@ -3,7 +3,7 @@
 {% block content %}
 <p>{{playlist.name}}</p>
 <p><a href="{% url 'delete_playlist' user_id playlist.pk %}">Delete playlist</a></p>
-<p><a>Rename playlist</a></p>
+<p><a href="{% url 'update_name' user_id playlist.pk %}">Rename playlist</a></p>
 <hr><hr>
     {% for song in songs %}
         <p><a href='{% url "song_detail" song.song.pk %}'>{{song.song.name}}</a></p>
