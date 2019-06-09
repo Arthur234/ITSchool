@@ -1,3 +1,5 @@
+import random
+
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -17,11 +19,32 @@ def get_song_detail(request, song_id):
 
 
 def get_playlist(request, user_id):
-    current_user = request.user
     playlists = Playlist.objects.filter(user=user_id)
 
-    return render(request, 'playlist/playlists_view.html', {'current_user': current_user, 'playlists': playlists,
-                                                            'user_id': user_id})
+    number_of_songs_in_playlist = dict()
+    genre_of_playlist = dict()
+
+    for pl in playlists:
+        number_of_songs_in_playlist[pl.id] = UserSongs.objects.filter(playlist__pk=pl.id).count()
+
+    for pl in playlists:
+        genres = []
+        songs = UserSongs.objects.filter(playlist__pk=pl.id)
+
+        for i in songs:
+                genres.append(i.song.genre)
+
+        genre_of_playlist[pl.id] = genres
+
+    context = {
+        'current_user': request.user,
+        'playlists': playlists,
+        'user_id': user_id,
+        'number_of_songs_in_playlist': number_of_songs_in_playlist,
+        'genre_of_playlist': genre_of_playlist
+    }
+
+    return render(request, 'playlist/playlists_view.html', context)
 
 
 def get_detailed_playlist(request, user_id, playlist_id):
@@ -94,8 +117,8 @@ def search_song(request):
     query = request.GET.get("q")
     if query not in '':
         by_name = Song.objects.filter(Q(name__icontains=query))
-        by_album = Song.objects.filter(Q(album__icontains=query))
-        by_artist = Song.objects.filter(Q(artist__icontains=query))
+        by_album = Song.objects.filter(Q(album__name__icontains=query))
+        by_artist = Song.objects.filter(Q(artist__name__icontains=query))
         songs = Song.objects.none()
     else:
         songs = Song.objects.all()
@@ -105,3 +128,6 @@ def search_song(request):
 
     return render(request, 'home.html', {'songs': songs, 'by_name': by_name, 'by_album': by_album,
                                          'by_artist': by_artist})
+
+def artist_view(request):
+    return render(request, 'artist/artist_detail.html')

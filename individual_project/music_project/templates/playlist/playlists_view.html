@@ -4,6 +4,23 @@
 
     {% for p in playlists %}
         <p><a href="{% url 'detailed_playlist' user_id p.pk  %}"><b>{{p.name}}</b></a></p>
+        {% for playlist_id, songs_count in number_of_songs_in_playlist.items %}
+            {% if p.pk == playlist_id %}
+                <p><b>Songs: </b> {{songs_count}}</p>
+            {% endif %}
+        {% endfor %}
+
+        <p><b>Duration: </b></p>
+        {% for playlist_id, playlists_genres in genre_of_playlist.items %}
+            {% if p.pk == playlist_id %}
+                <p>
+                    <b>Genre: </b>
+                    {% for i in playlists_genres %}
+                        {{i}},
+                    {% endfor %}
+                </p>
+            {% endif %}
+        {% endfor %}
         <hr>
     {% endfor %}
     <hr>

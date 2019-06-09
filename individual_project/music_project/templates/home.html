@@ -13,8 +13,9 @@
 <div>
     <ul class="list-group-unstyled">
         <li class="list-group-item list-group-item-action list-group-item-dark">
-            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist}} - {{song.name}}</a></h3>
-            <p>{{song.album}}</p>
+            <img src="{{song.album.cover}}" class="rounded float-right" alt="...">
+            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist.name}} - {{song.name}}</a></h3>
+            <p>{{song.album.name}}</p>
             <p>{{song.genre}}</p>
         </li>
     </ul>
@@ -27,8 +28,9 @@
 <div>
     <ul class="list-group-unstyled">
         <li class="list-group-item list-group-item-action list-group-item-dark">
-            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist}} - {{song.name}}</a></h3>
-            <p>{{song.album}}</p>
+            <img src="{{song.album.cover}}" class="rounded float-right" alt="...">
+            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist.name}} - {{song.name}}</a></h3>
+            <p>{{song.album.name}}</p>
             <p>{{song.genre}}</p>
         </li>
     </ul>
@@ -41,8 +43,9 @@
 <div>
     <ul class="list-group-unstyled">
         <li class="list-group-item list-group-item-action list-group-item-dark">
-            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist}} - {{song.name}}</a></h3>
-            <p>{{song.album}}</p>
+            <img src="{{song.album.cover}}" class="rounded float-right" alt="...">
+            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist.name}} - {{song.name}}</a></h3>
+            <p>{{song.album.name}}</p>
             <p>{{song.genre}}</p>
         </li>
     </ul>
@@ -55,8 +58,9 @@
 <div>
     <ul class="list-group-unstyled">
         <li class="list-group-item list-group-item-action list-group-item-dark">
-            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist}} - {{song.name}}</a></h3>
-            <p>{{song.album}}</p>
+            <img src="{{song.album.cover}}" class="rounded float-right" alt="...">
+            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist.name}} - {{song.name}}</a></h3>
+            <p>{{song.album.name}}</p>
             <p>{{song.genre}}</p>
         </li>
     </ul>

@@ -4,12 +4,15 @@ from django.contrib.auth import get_user_model
 
 class Song(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название песни')
-    artist = models.CharField(max_length=100, verbose_name='Музыкант')
-    # musicians = models.ForeignKey
-    album = models.CharField(max_length=50, verbose_name='Альбом')
+    artist = models.ForeignKey(
+        'Artist', null=True,
+        on_delete=models.CASCADE)
+    album = models.ForeignKey(
+        'Album', null=True,
+        on_delete=models.CASCADE)
     genre = models.CharField(max_length=100, blank=True, verbose_name='Жанр')
-    lyrics = models.TextField(blank=True, null=True, verbose_name='Текст песни')
-    tone = models.CharField(max_length=10, verbose_name='Тональность')
+    duration = models.IntegerField(null=True)
+    song_preview = models.CharField(max_length=200, null=True)
 
     class Meta:
         verbose_name_plural = 'Песни'
@@ -19,8 +22,20 @@ class Song(models.Model):
         return f'{self.name}'
 
 
-class Musicians(models.Model):
-    pass
+class Artist(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя исполнителя', null=True)
+    picture = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Album(models.Model):
+    name = models.CharField(max_length=100)
+    cover = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Playlist(models.Model):
@@ -40,7 +55,6 @@ class Playlist(models.Model):
 
 
 class UserSongs(models.Model):
-
     playlist = models.ForeignKey(
         'Playlist', null=True,
         on_delete=models.CASCADE,
@@ -59,4 +73,3 @@ class UserSongs(models.Model):
 
     def __str__(self):
         return f'{self.playlist} _ {self.song}'
-
