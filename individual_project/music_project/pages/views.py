@@ -24,7 +24,6 @@ def get_playlist(request, user_id):
     number_of_songs_in_playlist = dict()
     genre_of_playlist = dict()
 
-
     for pl in playlists:
         number_of_songs_in_playlist[pl.id] = UserSongs.objects.filter(playlist__pk=pl.id).count()
 
@@ -146,3 +145,16 @@ def alubm_view(request, album_id):
     album = Album.objects.get(pk=album_id)
     album_songs = Song.objects.filter(album__pk=album_id)
     return render(request, 'album/album_detail.html', {'album': album, 'songs': album_songs})
+
+
+def genres_view(request):
+    genres = set()
+    songs = Song.objects.all()
+    for song in songs:
+        genres.add(song.genre)
+    return render(request, 'genres/genres_view.html', {'genres': genres})
+
+
+def genres_detail_view(request, genre):
+    songs = Song.objects.filter(genre=genre)
+    return render(request, 'genres/genres_detail_view.html', {'songs': songs, 'genre':genre})

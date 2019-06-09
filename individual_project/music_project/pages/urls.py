@@ -13,6 +13,8 @@ from .views import (
     update_playlist_name,
     artist_view,
     alubm_view,
+    genres_view,
+    genres_detail_view,
 )
 
 urlpatterns = [
@@ -27,9 +29,12 @@ urlpatterns = [
     path('playlists/<int:user_id>/detail/<int:playlist_id>/', get_detailed_playlist, name='detailed_playlist'),
     path('playlists/<int:user_id>/detail/<int:playlist_id>/delete/', delete_playlist, name='delete_playlist'),
     path('playlists/<int:user_id>/detail/<int:playlist_id>/rename/', update_playlist_name, name='update_name'),
-    path('playlists/<int:user_id>/detail/<int:playlist_id>/<int:song_id>', delete_song_from_playlist,
+    path('playlists/<int:user_id>/detail/<int:playlist_id>/<int:song_id>/', delete_song_from_playlist,
          name='delete_song'),
 
-    path('artist/<int:artist_id>', artist_view, name='artist_view'),
-    path('album/<int:album_id>', alubm_view, name='album_view'),
+    path('artist/<int:artist_id>/', artist_view, name='artist_view'),
+    path('album/<int:album_id>/', alubm_view, name='album_view'),
+
+    path('genres/', genres_view, name='genres_view'),
+    path('genres/<str:genre>/', genres_detail_view, name='genres_detail_view'),
 ]
