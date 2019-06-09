@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import Song, Playlist, UserSongs
+from .models import Song, Playlist, UserSongs, Artist, Album
 from .forms import PlaylistForm, ChoosePlaylistForm
 
 
@@ -24,24 +24,30 @@ def get_playlist(request, user_id):
     number_of_songs_in_playlist = dict()
     genre_of_playlist = dict()
 
+
     for pl in playlists:
         number_of_songs_in_playlist[pl.id] = UserSongs.objects.filter(playlist__pk=pl.id).count()
 
-    for pl in playlists:
-        genres = []
+        genres = set()
         songs = UserSongs.objects.filter(playlist__pk=pl.id)
-
         for i in songs:
-                genres.append(i.song.genre)
-
+            genres.add(i.song.genre)
         genre_of_playlist[pl.id] = genres
+
+        duration = 0
+        for i in songs:
+            duration += i.song.duration
+
+        minutes, seconds = divmod(duration, 60)
 
     context = {
         'current_user': request.user,
         'playlists': playlists,
         'user_id': user_id,
         'number_of_songs_in_playlist': number_of_songs_in_playlist,
-        'genre_of_playlist': genre_of_playlist
+        'genre_of_playlist': genre_of_playlist,
+        'min': minutes,
+        'sec': seconds,
     }
 
     return render(request, 'playlist/playlists_view.html', context)
@@ -129,5 +135,14 @@ def search_song(request):
     return render(request, 'home.html', {'songs': songs, 'by_name': by_name, 'by_album': by_album,
                                          'by_artist': by_artist})
 
-def artist_view(request):
-    return render(request, 'artist/artist_detail.html')
+
+def artist_view(request, artist_id):
+    artist = Artist.objects.get(pk=artist_id)
+    artist_songs = Song.objects.filter(artist__pk=artist_id)
+    return render(request, 'artist/artist_detail.html', {'artist': artist, 'songs': artist_songs})
+
+
+def alubm_view(request, album_id):
+    album = Album.objects.get(pk=album_id)
+    album_songs = Song.objects.filter(album__pk=album_id)
+    return render(request, 'album/album_detail.html', {'album': album, 'songs': album_songs})

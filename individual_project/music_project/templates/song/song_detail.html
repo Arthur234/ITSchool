@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <blockquote class="blockquote text-center">
+    <div class="container">
 
-        <p class="mb-0">{{current.name}}</p>
-        <footer class="blockquote-footer">{{current.artist}}</footer>
-        <a href='{% url "add_song_in_playlist" current.pk %}'>Add to playlist</a>
+        <p>Song name - {{current.name}}</p>
+        <p>Artist - <a href="{% url 'artist_view' current.artist.pk %}">{{current.artist}}</a></p>
+        <p>Album - <a href="{% url 'album_view' current.album.pk %}">{{current.album.name}}</a></p>
+
+        <br><br>
+        <p><a href='{% url "add_song_in_playlist" current.pk %}'>Add To Playlist</a></p>
         <p><a href="{{current.song_preview}}">Послушать</a></p>
-    </blockquote>
+    </div>
     {{form}}
 {% endblock content %}

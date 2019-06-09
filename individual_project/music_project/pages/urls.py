@@ -11,6 +11,8 @@ from .views import (
     delete_playlist,
     delete_song_from_playlist,
     update_playlist_name,
+    artist_view,
+    alubm_view,
 )
 
 urlpatterns = [
@@ -28,4 +30,6 @@ urlpatterns = [
     path('playlists/<int:user_id>/detail/<int:playlist_id>/<int:song_id>', delete_song_from_playlist,
          name='delete_song'),
 
+    path('artist/<int:artist_id>', artist_view, name='artist_view'),
+    path('album/<int:album_id>', alubm_view, name='album_view'),
 ]
