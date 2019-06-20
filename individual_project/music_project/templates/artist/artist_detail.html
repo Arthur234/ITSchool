@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <img src="{{artist.picture}}" alt="...">
+    <p>Artist name: {{artist.name}}</p>
+
+{% for song in songs %}
+<div>
+    <ul class="list-group-unstyled">
+        <li class="list-group-item list-group-item-action list-group-item-dark">
+            <img src="{{song.album.cover}}" class="rounded float-right" alt="...">
+            <h3><a class="text-muted" href='{% url "song_detail" song.pk %}'>{{song.artist.name}} - {{song.name}}</a></h3>
+            <p><a href="{% url 'album_view' song.album.pk %}">{{song.album.name}}</a></p>
+            <p>{{song.genre}}</p>
+        </li>
+    </ul>
+</div>
+{% endfor %}
+{% endblock content %}

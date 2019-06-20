@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <p>Song name - {{current.name}}</p>
+        <p>Artist - <a href="{% url 'artist_view' current.artist.pk %}">{{current.artist}}</a></p>
+        <p>Album - <a href="{% url 'album_view' current.album.pk %}">{{current.album.name}}</a></p>
+
+        <br><br>
+        <p><a href='{% url "add_song_in_playlist" current.pk %}'>Add To Playlist</a></p>
+        <p><a href="{{current.song_preview}}">Послушать</a></p>
+    </div>
+    {{form}}
+{% endblock content %}

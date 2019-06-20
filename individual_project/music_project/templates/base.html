@@ -18,6 +18,11 @@
       aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+            <nav class="nav">
+                <a class="nav-link" href="{% url 'genres_view' %}">Genres</a>
+                <a class="nav-link" href="#">Charts</a>
+            </nav>
       <div class="collapse navbar-collapse" id="navbarCollapse">
           {% if user.is_authenticated %}
           <ul class="navbar-nav ml-auto">
@@ -34,7 +39,7 @@
                       <a class="dropdown-item"
                          href="{% url 'playlist' request.user.id %}">Playlists</a>
                       <a class="dropdown-item"
-                         href="{% url 'password_change'%}">Settings</a>
+                         href="{% url 'password_change'%}">Change password</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="{% url 'logout' %}">
                           Log Out</a>
